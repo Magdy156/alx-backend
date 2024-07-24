@@ -1,30 +1,34 @@
 #!/usr/bin/env python3
-""" 1- FIFO
+"""FIFO caching module.
 """
-
 from collections import OrderedDict
 from base_caching import BaseCaching
 
 
 class FIFOCache(BaseCaching):
-    """FIFO cashing system"""
-
+    """FIFO Caching System
+    """
     def __init__(self):
-        """Constructor"""
+        """Initializes the cache.
+        """
         super().__init__()
         self.cache_data = OrderedDict()
 
     def put(self, key, item):
-        """Assign the value to the key"""
+        """Adds an item in the cache.
+        """
+
         if key is None or item is None:
             return
 
         self.cache_data[key] = item
 
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            firstKey, _ = self.cache_data.popitem(last=False)
-            print(f"DISCARD: {firstKey}")
+            firstKey, _ = self.cache_data.popitem(False)
+
+            print("DISCARD:", firstKey)
 
     def get(self, key):
-        """Return the key value"""
-        return self.cache_data.get(key)
+        """Retrieves an item by key.
+        """
+        return self.cache_data.get(key, None)
