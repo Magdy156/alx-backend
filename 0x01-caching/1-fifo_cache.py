@@ -10,6 +10,7 @@ class FIFOCache(BaseCaching):
     """FIFO cashing system"""
 
     def __init__(self):
+        """Constructor"""
         super().__init__()
         self.cache_data = OrderedDict()
 
