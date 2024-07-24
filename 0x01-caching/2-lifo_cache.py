@@ -1,32 +1,35 @@
 #!/usr/bin/env python3
-""" 2- LIFO
+"""LIFO caching module.
 """
-
 from collections import OrderedDict
 from base_caching import BaseCaching
 
 
 class LIFOCache(BaseCaching):
-    """LIFO cashing system"""
-
+    """LIFO Caching System
+    """
     def __init__(self):
-        """Constructor"""
+        """Initializes the cache.
+        """
         super().__init__()
         self.cache_data = OrderedDict()
 
     def put(self, key, item):
-        """Assign the value to the key"""
+        """Adds an item in the cache.
+        """
+
         if key is None or item is None:
             return
 
         if key not in self.cache_data:
             if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
-                lastKey, _ = self.cache_data.popitem()
-                print(f"DISCARD: {lastKey}")
+                last_key, _ = self.cache_data.popitem(True)
+                print("DISCARD:", last_key)
 
         self.cache_data[key] = item
         self.cache_data.move_to_end(key, last=True)
 
     def get(self, key):
-        """Return the key value"""
-        return self.cache_data.get(key)
+        """Retrieves an item by key.
+        """
+        return self.cache_data.get(key, None)
